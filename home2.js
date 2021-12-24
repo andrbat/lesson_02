@@ -18,12 +18,25 @@ const votes = [
 ];
 
 function getVotes(list) {
-  return [... new Set(list)];
-}
-
-function getVotes2(list) {
-  return list.reduce((acc, item) => { !acc.includes(item) && acc.push(item); return acc; }, []);
+  const out = [];
+  list.forEach(el => {
+    let idx = findEl(el);
+    if (idx == -1) {
+      out.push({ name: el, count: 1 });
+    } else {
+      out[idx].count += 1;
+    }
+  });
+  out.sort((a, b) => { return b.count - a.count });
+  function findEl(el) {
+    for (let i = 0; i < out.length; i++) {
+      if (out[i].name == el) {
+        return i;
+      }
+    }
+    return -1;
+  }
+  return out.map(item => { return item.name });
 }
 
 console.log(getVotes(votes)); // [react, vue, angular]
-console.log(getVotes2(votes)); // [react, vue, angular]

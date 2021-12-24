@@ -55,8 +55,8 @@ const pipe = (...fns) => (x) => fns.reduce((v, f) => f(v), x);
 
 /*  Business logic */
 const getProp = curry((prop, arr) => { return arr.map(user => user[prop]) });
-const groupedItems = curry((arr) => { return [... new Set(arr)] });
-const sortBy = curry((arr) => { return arr.sort() });
+const groupedItems = function (arr) { return [... new Set(arr)] };
+const sortBy = function (arr) { return arr.sort() };
 // const getOpts = curry((arr) => { return arr.map(item => `<option>${item}</option>`) });
 const getOpts = function (arr) { return arr.map(item => `<option>${item}</option>`) };
 
@@ -68,8 +68,8 @@ const productsSelect = document.getElementById("products-select");
 // getProps може приймати department, age, name, price, title
 
 
-const userFn = pipe(getProp("department"), groupedItems(), sortBy(), getOpts);
-const productFn = pipe(getProp("title"), groupedItems(), sortBy(), getOpts);
+const userFn = pipe(getProp("department"), groupedItems, sortBy, getOpts);
+const productFn = pipe(getProp("title"), groupedItems, sortBy, getOpts);
 
 const usersOpts = userFn(users);
 const productsOpts = productFn(products);
